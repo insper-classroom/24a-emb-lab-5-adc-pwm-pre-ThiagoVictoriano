@@ -25,10 +25,20 @@ void data_task(void *p) {
 
 void process_task(void *p) {
     int data = 0;
+    int filtered[5] = {0};
+    int sum = 0;
 
     while (true) {
         if (xQueueReceive(xQueueData, &data, 100)) {
-            // implementar filtro aqui!
+            sum -= filtered[0]; 
+            for (int i = 0; i < 4; i++) {
+                filtered[i] = filtered[i + 1]; 
+            }
+            filtered[4] = data; 
+            sum += data; 
+
+            int filtered_data = sum / 5;
+            printf("Dado filtrado: %d\n", filtered_data);
 
 
 
